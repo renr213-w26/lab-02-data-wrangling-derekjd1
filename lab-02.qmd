@@ -30,12 +30,20 @@ midwest |>
   arrange(desc(num_counties))
 ```
 
-Illinois (IL) has the most amount of counties at 102.
+Illinois (IL) has the most amount of counties at 102.\n
 Wisconsin (WI) has the least amount of counties at 72.
 
 \newpage
 
 ### Question 2
+```{r}
+midwest |>
+  count(county) |>
+  filter(n == n_distinct(midwest$state))
+ 
+```
+
+The counties of CRAWFORD, JACKSON, and MONROE could fill in this blank as these county names appear once in each of the 5 states.
 
 \newpage
 
