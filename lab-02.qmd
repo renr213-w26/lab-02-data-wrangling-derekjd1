@@ -206,6 +206,34 @@ midwest |>
 \newpage
 
 ### Question 7
+```{r}
+# Question 7a - total population for each state
+state_population <- midwest |>
+  group_by(state) |>
+  summarise(total_population = sum(poptotal, na.rm = TRUE)) |>
+  arrange(desc(total_population))
+
+state_population
+
+```
+```{r}
+# Question 7b - proportion of the total population
+proportion_of_population <- state_population |>
+  mutate(proportion_of_population = total_population / sum(total_population)) |>
+  arrange(desc(proportion_of_population))
+
+proportion_of_population
+  
+```
+
+```{r}
+# Question 7c - Most populous state
+proportion_of_population |>
+  slice(c(1, n())) |>
+  mutate(population_percent = 100 * proportion_of_population) 
+```
+
+The state that is the most populous is IL with a total population of 11430602 with a population % of 27.20993. And the state with the lowest population is WI with a total population of 4891769 with a population % of 11.64459.
 
 \newpage
 
