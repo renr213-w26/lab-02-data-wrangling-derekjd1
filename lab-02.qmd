@@ -93,6 +93,16 @@ The distribution of population density of counties is unimodal and extremely rig
 \newpage
 
 ### Question 5
+```{r}
+midwest |>
+  mutate(metro = if_else(inmetro == 1, "Yes", "No")) |>
+  group_by(state, metro) |>
+  summarise(n = n(), .groups = "drop") |>
+  group_by(state) |>
+  mutate(proportion = n / sum(n)) |>
+  arrange(state, desc(metro))
+```
+
 
 \newpage
 
