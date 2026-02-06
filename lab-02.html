@@ -498,6 +498,142 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="part-2">Part 2</h2>
 <section id="question-9" class="level3">
 <h3 class="anchored" data-anchor-id="question-9">Question 9</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">var_1 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">var_2 =</span> <span class="fu">c</span>(<span class="st">"Pizza"</span>, <span class="st">"Burger"</span>, <span class="st">"Pizza"</span>, <span class="st">"Pizza"</span>, <span class="st">"Burger"</span>),</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">var_3 =</span> <span class="fu">c</span>(<span class="st">"Apple"</span>, <span class="st">"Apple"</span>, <span class="st">"Pear"</span>, <span class="st">"Pear"</span>, <span class="st">"Banana"</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  var_1 var_2  var_3 
+  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
+1    10 Pizza  Apple 
+2    20 Burger Apple 
+3    30 Pizza  Pear  
+4    40 Pizza  Pear  
+5    50 Burger Banana</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question - 9a</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(var_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  var_1 var_2  var_3 
+  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
+1    20 Burger Apple 
+2    50 Burger Banana
+3    10 Pizza  Apple 
+4    30 Pizza  Pear  
+5    40 Pizza  Pear  </code></pre>
+</div>
+</div>
+<p>The code chunk in 9a sorts the rows of the dataframe alphabetically by var_2.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question - 9b</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(var_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+# Groups:   var_2 [2]
+  var_1 var_2  var_3 
+  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
+1    10 Pizza  Apple 
+2    20 Burger Apple 
+3    30 Pizza  Pear  
+4    40 Pizza  Pear  
+5    50 Burger Banana</code></pre>
+</div>
+</div>
+<p>The code in 9b groups the data by var_2 so different operations (like summarize) are performed separately for each group.</p>
+<p>This is different then arrange because arrange changes row order while group by only changes how it is interpreted for future code.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question - 9c</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(var_2) <span class="sc">|&gt;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_var_1 =</span> <span class="fu">mean</span>(var_1))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  var_2  mean_var_1
+  &lt;chr&gt;       &lt;dbl&gt;
+1 Burger       35  
+2 Pizza        26.7</code></pre>
+</div>
+</div>
+<p>The piece of code in 9c groups the data by var_2 and calculates the mean of var_1 within each group.</p>
+<p>Using summarize it also produces a new column named mean_var_1 with the new calculated value and each of the var_2 data points are now columns - (Burger and Pizza).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question - 9d</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(var_2, var_3) <span class="sc">|&gt;</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_var_1 =</span> <span class="fu">mean</span>(var_1))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'var_2'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+# Groups:   var_2 [2]
+  var_2  var_3  mean_var_1
+  &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;
+1 Burger Apple          20
+2 Burger Banana         50
+3 Pizza  Apple          10
+4 Pizza  Pear           35</code></pre>
+</div>
+</div>
+<p>This code in 9d groups the data by both var_2 and var_3 and computes the mean of var_1 for each unique combination. For example “Pizza” and “Pear” combination appear twice in the original dataset, there values are 30 and 40, this code will combine Pizza and Pear and the mean var 1 value will be 35.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question - 9e</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(var_2, var_3) <span class="sc">|&gt;</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_var_1 =</span> <span class="fu">mean</span>(var_1), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  var_2  var_3  mean_var_1
+  &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;
+1 Burger Apple          20
+2 Burger Banana         50
+3 Pizza  Apple          10
+4 Pizza  Pear           35</code></pre>
+</div>
+</div>
+<p>The calculations of the code in 9e are the same as 9d but the .groups = “drop” version removes the grouping after summarising.</p>
+<p>So the output values are the same but the result is ungrouped which avoids having grouped data for later analysis.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question - 9f</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(var_2, var_3) <span class="sc">|&gt;</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_var_1 =</span> <span class="fu">mean</span>(var_1), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  var_2  var_3  mean_var_1
+  &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;
+1 Burger Apple          20
+2 Burger Banana         50
+3 Pizza  Apple          10
+4 Pizza  Pear           35</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(var_2, var_3) <span class="sc">|&gt;</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_var_1 =</span> <span class="fu">mean</span>(var_1))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+# Groups:   var_2, var_3 [4]
+  var_1 var_2  var_3  mean_var_1
+  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;
+1    10 Pizza  Apple          10
+2    20 Burger Apple          20
+3    30 Pizza  Pear           35
+4    40 Pizza  Pear           35
+5    50 Burger Banana         50</code></pre>
+</div>
+</div>
+<p>The following two pipelines for 9f differ in the fact that the first uses summarize and the second uses mutate. Summarize creates one group to condense into one row which reduces the size of the dataset. While mutate keeps all original rows and in the mean_var_1 column the mean value will be repeated as seen in the output.</p>
 </section>
 </section>
 </section>

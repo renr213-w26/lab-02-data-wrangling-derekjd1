@@ -262,3 +262,72 @@ The state with the highest average percentage below poverty acroess its counties
 
 ### Question 9
 
+```{r}
+df <- tibble(
+  var_1 = c(10, 20, 30, 40, 50),
+  var_2 = c("Pizza", "Burger", "Pizza", "Pizza", "Burger"),
+  var_3 = c("Apple", "Apple", "Pear", "Pear", "Banana")
+)
+
+df
+```
+
+```{r}
+# Question - 9a
+df |>
+  arrange(var_2)
+```
+The code chunk in 9a sorts the rows of the dataframe alphabetically by var_2.
+
+```{r}
+# Question - 9b
+df |>
+  group_by(var_2)
+```
+The code in 9b groups the data by var_2 so different operations (like summarize) are performed separately for each group.
+
+This is different then arrange because arrange changes row order while group by only changes how it is interpreted for future code.
+
+```{r}
+# Question - 9c
+df |>
+  group_by(var_2) |>
+  summarize(mean_var_1 = mean(var_1))
+```
+The piece of code in 9c groups the data by var_2 and calculates the mean of var_1 within each group.
+
+Using summarize it also produces a new column named mean_var_1 with the new calculated value and each of the var_2 data points are now columns -  (Burger and Pizza).
+
+
+```{r}
+# Question - 9d
+df |>
+  group_by(var_2, var_3) |>
+  summarize(mean_var_1 = mean(var_1))
+```
+This code in 9d groups the data by both var_2 and var_3 and computes the mean of var_1 for each unique combination. For example "Pizza" and "Pear" combination appear twice in the original dataset, there values are 30 and 40, this code will combine Pizza and Pear and the mean var 1 value will be 35.
+
+```{r}
+# Question - 9e
+df |>
+  group_by(var_2, var_3) |>
+  summarize(mean_var_1 = mean(var_1), .groups = "drop")
+```
+The calculations of the code in 9e are the same as 9d but the .groups = "drop" version removes the grouping after summarising. 
+
+So the output values are the same but the result is ungrouped which avoids having grouped data for later analysis.
+
+```{r}
+# Question - 9f
+df |>
+  group_by(var_2, var_3) |>
+  summarize(mean_var_1 = mean(var_1), .groups = "drop")
+
+df |>
+  group_by(var_2, var_3) |>
+  mutate(mean_var_1 = mean(var_1))
+```
+
+The following two pipelines for 9f differ in the fact that the first uses summarize and the second uses mutate. Summarize creates one group to condense into one row which reduces the size of the dataset. While mutate keeps all original rows and in the mean_var_1 column the mean value will be repeated as seen in the output.
+
+
