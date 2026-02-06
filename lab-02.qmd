@@ -123,7 +123,7 @@ midwest |>
   )
 ```
 ```{r}
-# Question 6b - bottom left corner
+# Question 6b - bottom right corner
 midwest |>
   filter(
     percbelowpoverty < 20,
@@ -277,7 +277,7 @@ df
 df |>
   arrange(var_2)
 ```
-The code chunk in 9a sorts the rows of the dataframe alphabetically by var_2.
+The code chunk in 9a sorts the rows of the dataframe alphabetically by var_2. So Burger appears ahead of Pizza in the tibble.
 
 ```{r}
 # Question - 9b
@@ -296,7 +296,7 @@ df |>
 ```
 The piece of code in 9c groups the data by var_2 and calculates the mean of var_1 within each group.
 
-Using summarize it also produces a new column named mean_var_1 with the new calculated value and each of the var_2 data points are now columns -  (Burger and Pizza).
+Using summarize it also produces a new column named mean_var_1 with the new calculated value and each of the var_2 data points are now rows -  (Burger and Pizza).
 
 
 ```{r}
@@ -305,7 +305,8 @@ df |>
   group_by(var_2, var_3) |>
   summarize(mean_var_1 = mean(var_1))
 ```
-This code in 9d groups the data by both var_2 and var_3 and computes the mean of var_1 for each unique combination. For example "Pizza" and "Pear" combination appear twice in the original dataset, there values are 30 and 40, this code will combine Pizza and Pear and the mean var 1 value will be 35.
+This code in 9d groups the data by both var_2 and var_3 and computes the mean of var_1 for each unique combination. For example "Pizza" and "Pear" combination appear twice in the original dataset, there values are 30 and 40, this code will combine Pizza and Pear and the mean_var_1 value will be 35.
+
 
 ```{r}
 # Question - 9e

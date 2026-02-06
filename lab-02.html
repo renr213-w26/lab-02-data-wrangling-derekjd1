@@ -281,7 +281,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 6b - bottom left corner</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 6b - bottom right corner</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>midwest <span class="sc">|&gt;</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    percbelowpoverty <span class="sc">&lt;</span> <span class="dv">20</span>,</span>
@@ -532,7 +532,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5    40 Pizza  Pear  </code></pre>
 </div>
 </div>
-<p>The code chunk in 9a sorts the rows of the dataframe alphabetically by var_2.</p>
+<p>The code chunk in 9a sorts the rows of the dataframe alphabetically by var_2. So Burger appears ahead of Pizza in the tibble.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question - 9b</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
@@ -565,7 +565,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The piece of code in 9c groups the data by var_2 and calculates the mean of var_1 within each group.</p>
-<p>Using summarize it also produces a new column named mean_var_1 with the new calculated value and each of the var_2 data points are now columns - (Burger and Pizza).</p>
+<p>Using summarize it also produces a new column named mean_var_1 with the new calculated value and each of the var_2 data points are now rows - (Burger and Pizza).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question - 9d</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
@@ -586,7 +586,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 4 Pizza  Pear           35</code></pre>
 </div>
 </div>
-<p>This code in 9d groups the data by both var_2 and var_3 and computes the mean of var_1 for each unique combination. For example “Pizza” and “Pear” combination appear twice in the original dataset, there values are 30 and 40, this code will combine Pizza and Pear and the mean var 1 value will be 35.</p>
+<p>This code in 9d groups the data by both var_2 and var_3 and computes the mean of var_1 for each unique combination. For example “Pizza” and “Pear” combination appear twice in the original dataset, there values are 30 and 40, this code will combine Pizza and Pear and the mean_var_1 value will be 35.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question - 9e</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
