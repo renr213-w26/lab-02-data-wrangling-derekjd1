@@ -1,7 +1,7 @@
 ---
 title: "Lab 2 - Data wrangling"
-author: "John Q. Student"
-date: "June 24, 1497"
+author: "Derek Dubrule. Student"
+date: "2026-02-05"
 format: 
   html: default # for speed
   pdf: default # for final output
@@ -23,29 +23,237 @@ library(tidyverse)
 
 ### Question 1
 
+```{r}
+midwest |>
+  group_by(state) |>
+  summarise(num_counties = n()) |>
+  arrange(desc(num_counties))
+```
+
+Illinois (IL) has the most amount of counties at 102.
+
+Wisconsin (WI) has the least amount of counties at 72.
 
 \newpage
 
 ### Question 2
+```{r}
+midwest |>
+  count(county) |>
+  filter(n == n_distinct(midwest$state))
+ 
+```
+
+The counties of CRAWFORD, JACKSON, and MONROE could fill in this blank as these county names appear once in each of the 5 states.
 
 \newpage
 
 ### Question 3
+```{r}
+# Question 3a - population density > 250000
+midwest |>
+  filter(popdensity > 25000) |>
+  select(
+    county,
+    state,
+    popdensity,
+    poptotal,
+    area
+  ) |>
+  arrange(desc(popdensity))
+```
+```{r}
+# Question 3b - max population density
+midwest |>
+  filter(popdensity == max(popdensity)) |>
+  select(
+    county,
+    state,
+    popdensity,
+    poptotal,
+    area
+  )
+```
+
+\newpage
+
+### Question 4
+
+```{r}
+midwest |>
+  summarise(
+    normal_popdensity = median(popdensity, na.rm = TRUE),
+    middle_popdensity_25 = quantile(popdensity, 0.25, na.rm = TRUE),
+    middle_popdensity_75 = quantile(popdensity, 0.75, na.rm = TRUE)
+  )
+  
+```
+The distribution of population density of counties is unimodal and extremely right-skewed. A typical Midwestern county has population density of 1156 people per unit area. The middle 50% of the counties have population densities between 622 to 2330 people per unit area.
+
 \newpage
 
 ### Question 5
+```{r}
+midwest |>
+  mutate(metro = if_else(inmetro == 1, "Yes", "No")) |>
+  group_by(state, metro) |>
+  summarise(n = n(), .groups = "drop") |>
+  group_by(state) |>
+  mutate(proportion = n / sum(n)) |>
+  arrange(state, desc(metro))
+```
+
 
 \newpage
 
 ### Question 6
 
+```{r}
+# Question 6a - Upper Left Corner
+midwest |>
+  filter(
+    percbelowpoverty > 40,
+    percollege < 10
+  ) |>
+  select(
+    county,
+    state,
+    percbelowpoverty,
+    percollege
+  )
+```
+```{r}
+# Question 6b - bottom right corner
+midwest |>
+  filter(
+    percbelowpoverty < 20,
+    percollege > 40
+  ) |>
+  select(
+    county,
+    state,
+    percbelowpoverty,
+    percollege
+  )
+```
+
+```{r}
+# Question 6c - Combine the previous 2 pipelines
+midwest |>
+  filter(
+        (percbelowpoverty > 40 & percollege < 10) |
+        (percbelowpoverty < 20 & percollege > 40)
+  ) |>
+  select(
+    county,
+    state,
+    percbelowpoverty,
+    percollege
+  )
+```
+
+```{r}
+# Question 6d - new variable
+midwest |>
+  mutate(
+    potential_outlier = if_else(
+        (percbelowpoverty > 40 & percollege < 10) |
+        (percbelowpoverty < 20 & percollege > 40),
+        "Yes",
+        "No"
+    )
+  ) |>
+  select(
+    county,
+    state,
+    percbelowpoverty,
+    percollege,
+    potential_outlier
+  ) |>
+  arrange(potential_outlier)
+```
+
+```{r}
+# Question 6e - visualization
+
+midwest |>
+  mutate(
+    potential_outlier = if_else(
+        (percbelowpoverty > 40 & percollege < 10) |
+        (percbelowpoverty < 20 & percollege > 40),
+        "Yes",
+        "No"
+    )
+  ) |>
+  ggplot(aes(
+    x = percollege,
+    y = percbelowpoverty,
+    color = potential_outlier,
+    shape = state
+  )) +
+  geom_point() +
+  labs(
+    x = "Percentage of population with a college degree",
+    y = "Percentage of population below poverty", 
+    title = "Percentage below poverty vs college education in Midwestern counties",
+    color = "State",
+    shape = "State"
+  )
+
+```
+
+
 \newpage
 
 ### Question 7
+```{r}
+# Question 7a - total population for each state
+state_population <- midwest |>
+  group_by(state) |>
+  summarise(total_population = sum(poptotal, na.rm = TRUE)) |>
+  arrange(desc(total_population))
+
+state_population
+
+```
+```{r}
+# Question 7b - proportion of the total population
+proportion_of_population <- state_population |>
+  mutate(proportion_of_population = total_population / sum(total_population)) |>
+  arrange(desc(proportion_of_population))
+
+proportion_of_population
+  
+```
+
+```{r}
+# Question 7c - Most populous state
+proportion_of_population |>
+  slice(c(1, n())) |>
+  mutate(population_percent = 100 * proportion_of_population) 
+```
+
+The state that is the most populous is IL with a total population of 11430602 with a population % of 27.20993. And the state with the lowest population is WI with a total population of 4891769 with a population % of 11.64459.
 
 \newpage
 
 ### Question 8
+
+```{r}
+state_poverty <- midwest |>
+  group_by(state) |>
+  summarise(mean_percbelowpoverty = mean(percbelowpoverty, na.rm = TRUE))
+
+state_poverty
+```
+```{r}
+state_poverty |>
+  arrange((mean_percbelowpoverty))
+```
+
+The state with the lowest average percentage below poverty across its counties is Indiana (IN). 
+
+The state with the highest average percentage below poverty acroess its counties is Michigan (MI).
 
 \newpage
 
@@ -53,4 +261,74 @@ library(tidyverse)
 
 
 ### Question 9
+
+```{r}
+df <- tibble(
+  var_1 = c(10, 20, 30, 40, 50),
+  var_2 = c("Pizza", "Burger", "Pizza", "Pizza", "Burger"),
+  var_3 = c("Apple", "Apple", "Pear", "Pear", "Banana")
+)
+
+df
+```
+
+```{r}
+# Question - 9a
+df |>
+  arrange(var_2)
+```
+The code chunk in 9a sorts the rows of the dataframe alphabetically by var_2. So Burger appears ahead of Pizza in the tibble.
+
+```{r}
+# Question - 9b
+df |>
+  group_by(var_2)
+```
+The code in 9b groups the data by var_2 so different operations (like summarize) are performed separately for each group.
+
+This is different then arrange because arrange changes row order while group by only changes how it is interpreted for future code.
+
+```{r}
+# Question - 9c
+df |>
+  group_by(var_2) |>
+  summarize(mean_var_1 = mean(var_1))
+```
+The piece of code in 9c groups the data by var_2 and calculates the mean of var_1 within each group.
+
+Using summarize it also produces a new column named mean_var_1 with the new calculated value and each of the var_2 data points are now rows -  (Burger and Pizza).
+
+
+```{r}
+# Question - 9d
+df |>
+  group_by(var_2, var_3) |>
+  summarize(mean_var_1 = mean(var_1))
+```
+This code in 9d groups the data by both var_2 and var_3 and computes the mean of var_1 for each unique combination. For example "Pizza" and "Pear" combination appear twice in the original dataset, there values are 30 and 40, this code will combine Pizza and Pear and the mean_var_1 value will be 35.
+
+
+```{r}
+# Question - 9e
+df |>
+  group_by(var_2, var_3) |>
+  summarize(mean_var_1 = mean(var_1), .groups = "drop")
+```
+The calculations of the code in 9e are the same as 9d but the .groups = "drop" version removes the grouping after summarising. 
+
+So the output values are the same but the result is ungrouped which avoids having grouped data for later analysis.
+
+```{r}
+# Question - 9f
+df |>
+  group_by(var_2, var_3) |>
+  summarize(mean_var_1 = mean(var_1), .groups = "drop")
+
+df |>
+  group_by(var_2, var_3) |>
+  mutate(mean_var_1 = mean(var_1))
+```
+
+The following two pipelines for 9f differ in the fact that the first uses summarize and the second uses mutate. Summarize creates one group to condense into one row which reduces the size of the dataset. While mutate keeps all original rows and in the mean_var_1 column the mean value will be repeated as seen in the output.
+
 
