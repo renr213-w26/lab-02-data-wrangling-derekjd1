@@ -458,6 +458,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="question-8" class="level3">
 <h3 class="anchored" data-anchor-id="question-8">Question 8</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>state_poverty <span class="ot">&lt;-</span> midwest <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">|&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_percbelowpoverty =</span> <span class="fu">mean</span>(percbelowpoverty, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>state_poverty</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  state mean_percbelowpoverty
+  &lt;chr&gt;                 &lt;dbl&gt;
+1 IL                     13.1
+2 IN                     10.3
+3 MI                     14.2
+4 OH                     13.0
+5 WI                     11.9</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>state_poverty <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>((mean_percbelowpoverty))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  state mean_percbelowpoverty
+  &lt;chr&gt;                 &lt;dbl&gt;
+1 IN                     10.3
+2 WI                     11.9
+3 OH                     13.0
+4 IL                     13.1
+5 MI                     14.2</code></pre>
+</div>
+</div>
+<p>The state with the lowest average percentage below poverty across its counties is Indiana (IN).</p>
+<p>The state with the highest average percentage below poverty acroess its counties is Michigan (MI).</p>
 <div style="page-break-after: always;"></div>
 </section>
 </section>

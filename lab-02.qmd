@@ -239,6 +239,22 @@ The state that is the most populous is IL with a total population of 11430602 wi
 
 ### Question 8
 
+```{r}
+state_poverty <- midwest |>
+  group_by(state) |>
+  summarise(mean_percbelowpoverty = mean(percbelowpoverty, na.rm = TRUE))
+
+state_poverty
+```
+```{r}
+state_poverty |>
+  arrange((mean_percbelowpoverty))
+```
+
+The state with the lowest average percentage below poverty across its counties is Indiana (IN). 
+
+The state with the highest average percentage below poverty acroess its counties is Michigan (MI).
+
 \newpage
 
 ## Part 2
